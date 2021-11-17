@@ -27,7 +27,7 @@ const tileFactory = (x, y) => {
     return currentShip;
   };
 
-  return Object.freeze({
+  return {
     getPosition,
     EMPTY,
     OCCUPIED,
@@ -36,7 +36,7 @@ const tileFactory = (x, y) => {
     setState,
     getShip,
     setShip,
-  });
+  };
 };
 
 export default tileFactory;

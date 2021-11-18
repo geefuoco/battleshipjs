@@ -41,9 +41,20 @@ describe("when it gets the surrounding tiles", () => {
 
   test("it should get the correct tiles", () => {
     const tiles = Object.entries(board.getSurroundingTiles(3, 3));
+    const border = [];
     for (let [key, value] of tiles) {
-      console.log(value.getPosition());
+      border.push(value.getPosition());
     }
+    expect(border).toEqual([
+      [2, 3],
+      [3, 2],
+      [2, 2],
+      [4, 2],
+      [2, 4],
+      [4, 3],
+      [3, 4],
+      [4, 4],
+    ]);
   });
 });
 

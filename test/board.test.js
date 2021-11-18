@@ -90,6 +90,27 @@ describe("when placing a ship on the board", () => {
     expect(() => board.placeShip(otherShip, [4, 4])).toThrow();
   });
 
+  test("it should throw an error if the ship will go off the board", () => {
+    expect(() => board.placeShip(ship, [9, 9])).toThrow();
+  });
+
+  test("it should throw an error if a ship is next to the tile", () => {
+    const otherShip = {
+      HORIZONTAL: 1,
+      getLength: function () {
+        return 2;
+      },
+      getOrientation: function () {
+        return ship.HORIZONTAL;
+      },
+      hit: function () {},
+      isSunk: function () {
+        return true;
+      },
+    };
+    expect(() => board.placeShip(otherShip, [5, 5])).toThrow();
+  });
+
   test("it should cover the correct tiles", () => {
     const otherTile = board.getTile(4, 5);
     expect(otherTile.getShip()).toBe(otherTile.getShip());

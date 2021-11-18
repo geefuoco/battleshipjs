@@ -95,11 +95,21 @@ const boardFactory = (dimension) => {
 
   const placeShip = (ship, coords) => {
     const tile = getTile(coords[0], coords[1]);
-    const length = ship.getLength();
-    const shipTiles = [];
     if (tile.getState() === tile.OCCUPIED) {
       throw "ERROR: Ship already on tile";
     }
+    const shipTiles = getShipTiles(ship, coords);
+    shipTiles.push(tile);
+    validateShipTiles(shipTiles, ship, coords);
+    shipTiles.forEach((tile) => tile.setShip(ship));
+    ships.push(ship);
+    shipMap[ship] = shipTiles;
+  };
+
+  const getShipTiles = (ship, coords) => {
+    // Makes sure all tiles are on the board
+    const length = ship.getLength();
+    const shipTiles = [];
     for (let i = 0; i < length; i++) {
       let nextTile = null;
       if (ship.getOrientation() === ship.HORIZONTAL) {
@@ -107,13 +117,22 @@ const boardFactory = (dimension) => {
       } else {
         nextTile = getTile(coords[0] + i, coords[1]);
       }
-      nextTile.setShip(ship);
       shipTiles.push(nextTile);
     }
-    tile.setShip(ship);
-    shipTiles.push(tile);
-    ships.push(ship);
-    shipMap[ship] = shipTiles;
+    return shipTiles;
+  };
+
+  const validateShipTiles = (shipTiles, ship, coords) => {
+    // Makes sure that no other ships are within 1 square
+    shipTiles.forEach((tile) => {
+      const tiles = Object.entries(getSurroundingTiles(coords[0], coords[1]));
+      for (let [k, v] of tiles) {
+        if (v.getState() !== tile.EMPTY) {
+          if (v.getShip() === ship) continue;
+          throw "ERROR: Ship already on tile";
+        }
+      }
+    });
   };
 
   const allSunk = () => {

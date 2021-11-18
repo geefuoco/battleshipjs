@@ -1,6 +1,12 @@
-const shipFactory = (size) => {
+const shipFactory = (size, orientation = 0) => {
+  if (orientation < 0 || orientation > 1) {
+    throw "ERROR: Orientation must be 0 (Vertical) or 1 (Horizontal)";
+  }
   const length = size;
   let hitPoints = size;
+  const shipOrientation = orientation;
+  const HORIZONTAL = 1;
+  const VERTICAL = 0;
 
   const hit = () => {
     if (hitPoints > 0) {
@@ -10,6 +16,10 @@ const shipFactory = (size) => {
 
   const getHitPoints = () => {
     return hitPoints;
+  };
+
+  const getOrientation = () => {
+    return shipOrientation;
   };
 
   const getLength = () => {
@@ -25,6 +35,9 @@ const shipFactory = (size) => {
     getHitPoints,
     getLength,
     isSunk,
+    getOrientation,
+    HORIZONTAL,
+    VERTICAL,
   };
 };
 

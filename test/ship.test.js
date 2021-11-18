@@ -2,6 +2,12 @@ import shipFactory from "../src/scripts/ship.js";
 
 const ship = shipFactory(4);
 
+test("should throw an error if given bad input", () => {
+  expect(() => {
+    shipFactory(2, 9);
+  }).toThrow();
+});
+
 test("should display the ship's hitpoints", () => {
   expect(ship.getHitPoints()).toEqual(4);
 });

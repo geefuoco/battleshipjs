@@ -102,7 +102,7 @@ const boardFactory = (dimension) => {
     }
     for (let i = 0; i < length; i++) {
       let nextTile = null;
-      if (ship.HORIZONTAL) {
+      if (ship.getOrientation() === ship.HORIZONTAL) {
         nextTile = getTile(coords[0], coords[1] + i);
       } else {
         nextTile = getTile(coords[0] + i, coords[1]);

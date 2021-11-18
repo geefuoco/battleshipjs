@@ -38,6 +38,13 @@ describe("when it gets the surrounding tiles", () => {
     }
     expect(count).toBe(3);
   });
+
+  test("it should get the correct tiles", () => {
+    const tiles = Object.entries(board.getSurroundingTiles(3, 3));
+    for (let [key, value] of tiles) {
+      console.log(value.getPosition());
+    }
+  });
 });
 
 describe("when marking a hit", () => {

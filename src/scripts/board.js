@@ -43,7 +43,7 @@ const boardFactory = (dimension) => {
     const values = [-1, 1];
     for (let i of values) {
       if (!outOfBounds(x + i, y)) {
-        object[[x, y]] = getTile(x + i, y);
+        object[[x + i, y]] = getTile(x + i, y);
       }
       if (!outOfBounds(x, y + i)) {
         object[[x, y + i]] = getTile(x, y + i);

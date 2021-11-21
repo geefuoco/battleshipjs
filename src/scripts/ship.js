@@ -4,7 +4,7 @@ const shipFactory = (size, orientation = 0) => {
   }
   const length = size;
   let hitPoints = size;
-  const shipOrientation = orientation;
+  let shipOrientation = orientation;
   const HORIZONTAL = 1;
   const VERTICAL = 0;
 
@@ -22,6 +22,14 @@ const shipFactory = (size, orientation = 0) => {
     return shipOrientation;
   };
 
+  const swapOrientation = () => {
+    if (shipOrientation === HORIZONTAL) {
+      shipOrientation = VERTICAL;
+    } else {
+      shipOrientation = HORIZONTAL;
+    }
+  };
+
   const getLength = () => {
     return length;
   };
@@ -36,6 +44,7 @@ const shipFactory = (size, orientation = 0) => {
     getLength,
     isSunk,
     getOrientation,
+    swapOrientation,
     HORIZONTAL,
     VERTICAL,
   };

@@ -8,6 +8,11 @@ test("should throw an error if given bad input", () => {
   }).toThrow();
 });
 
+test("should switch the ships orientation", () => {
+  ship.swapOrientation();
+  expect(ship.getOrientation()).toBe(1);
+});
+
 test("should display the ship's hitpoints", () => {
   expect(ship.getHitPoints()).toEqual(4);
 });

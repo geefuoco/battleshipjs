@@ -30,7 +30,7 @@ const boardFactory = (dimension) => {
   };
 
   const outOfBounds = (x, y) => {
-    return x > boardSize || y > boardSize || x < 0 || y < 0;
+    return x > boardSize - 1 || y > boardSize - 1 || x < 0 || y < 0;
   };
 
   const getSurroundingTiles = (x, y) => {
@@ -93,12 +93,12 @@ const boardFactory = (dimension) => {
     }
   };
 
-  const placeShip = (ship, coords) => {
+  const placeShip = (ship, coords, offset = 0) => {
     const tile = getTile(coords[0], coords[1]);
     if (tile.getState() === tile.OCCUPIED) {
-      throw "ERROR: Ship already on tile";
+      throw "ERROR: Ship is too close to another ship.";
     }
-    const shipTiles = getShipTiles(ship, coords);
+    const shipTiles = getShipTiles(ship, coords, offset);
     shipTiles.push(tile);
     validateShipTiles(shipTiles, ship, coords);
     shipTiles.forEach((tile) => tile.setShip(ship));
@@ -106,16 +106,16 @@ const boardFactory = (dimension) => {
     shipMap[ship] = shipTiles;
   };
 
-  const getShipTiles = (ship, coords) => {
+  const getShipTiles = (ship, coords, offset) => {
     // Makes sure all tiles are on the board
     const length = ship.getLength();
     const shipTiles = [];
     for (let i = 0; i < length; i++) {
       let nextTile = null;
       if (ship.getOrientation() === ship.HORIZONTAL) {
-        nextTile = getTile(coords[0], coords[1] + i);
+        nextTile = getTile(coords[0], Number(coords[1]) + i - offset);
       } else {
-        nextTile = getTile(coords[0] + i, coords[1]);
+        nextTile = getTile(Number(coords[0]) + i - offset, coords[1]);
       }
       shipTiles.push(nextTile);
     }
@@ -125,10 +125,14 @@ const boardFactory = (dimension) => {
   const validateShipTiles = (shipTiles, ship, coords) => {
     // Makes sure that no other ships are within 1 square
     shipTiles.forEach((tile) => {
-      const tiles = Object.entries(getSurroundingTiles(coords[0], coords[1]));
+      const position = tile.getPosition();
+      const tiles = Object.entries(
+        getSurroundingTiles(position[0], position[1])
+      );
       for (let [k, v] of tiles) {
         if (v.getState() !== tile.EMPTY) {
           if (v.getShip() === ship) continue;
+          alert("Ships must be placed at least 1 tile apart");
           throw "ERROR: Ship already on tile";
         }
       }

@@ -59,7 +59,6 @@
     height: 3.4rem;
     background-color: #bbb;
     box-shadow: 0 0 .2rem grey;
-    // pointer-events: none;
 }
 
 .ship-holder{
@@ -75,6 +74,11 @@
     background-color: #ddd;
     box-shadow: 0 0 .2rem grey;
     gap: 1.2rem;
+    @media screen and(max-width: 1360px){
+        position: static;
+        height: auto;
+        width: 34rem;
+    }
 }
 .start-button{
     margin-left: 1rem;

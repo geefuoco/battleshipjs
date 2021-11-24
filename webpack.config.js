@@ -29,6 +29,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: "Web App",
+      minify: true,
     }),
   ],
   output: {

@@ -1,4 +1,4 @@
-const shipFactory = (size, orientation = 0) => {
+const shipFactory = (size, orientation = 1) => {
   if (orientation < 0 || orientation > 1) {
     throw "ERROR: Orientation must be 0 (Vertical) or 1 (Horizontal)";
   }

@@ -10,7 +10,7 @@ test("should throw an error if given bad input", () => {
 
 test("should switch the ships orientation", () => {
   ship.swapOrientation();
-  expect(ship.getOrientation()).toBe(1);
+  expect(ship.getOrientation()).toBe(0);
 });
 
 test("should display the ship's hitpoints", () => {

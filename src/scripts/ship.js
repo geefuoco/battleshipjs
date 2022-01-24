@@ -5,6 +5,7 @@ const shipFactory = (size, orientation = 1) => {
   const length = size;
   let hitPoints = size;
   let shipOrientation = orientation;
+  const id = Date.now() + Math.random(100);
   const HORIZONTAL = 1;
   const VERTICAL = 0;
 
@@ -12,6 +13,10 @@ const shipFactory = (size, orientation = 1) => {
     if (hitPoints > 0) {
       hitPoints -= 1;
     }
+  };
+
+  const getId = () => {
+    return id;
   };
 
   const getHitPoints = () => {
@@ -45,6 +50,7 @@ const shipFactory = (size, orientation = 1) => {
     isSunk,
     getOrientation,
     swapOrientation,
+    getId,
     HORIZONTAL,
     VERTICAL,
   };

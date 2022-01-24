@@ -13,6 +13,9 @@ const ship = {
   isSunk: function () {
     return true;
   },
+  getId: function () {
+    return 120;
+  },
 };
 
 describe("when getting a tile", () => {
@@ -55,25 +58,6 @@ describe("when it gets the surrounding tiles", () => {
       [3, 4],
       [4, 4],
     ]);
-  });
-});
-
-describe("when marking a hit", () => {
-  const tile = board.getTile(2, 2);
-  tile.setShip(ship);
-  const hit = jest.spyOn(tile, "setState");
-  const testShip = jest.spyOn(ship, "hit");
-  beforeEach(() => {
-    board.markHit(2, 2);
-  });
-  test("it should mark the tile as hit", () => {
-    expect(hit).toHaveBeenCalled();
-    hit.mockRestore();
-  });
-
-  test("the ship should take damage if it is hit", () => {
-    expect(testShip).toHaveBeenCalled();
-    testShip.mockRestore();
   });
 });
 
@@ -131,6 +115,9 @@ describe("when all the ships have been sunk", () => {
     isSunk: function () {
       return true;
     },
+    getId: function () {
+      return 123;
+    },
   };
   const testShip2 = {
     HORIZONTAL: 1,
@@ -143,6 +130,9 @@ describe("when all the ships have been sunk", () => {
     hit: function () {},
     isSunk: function () {
       return true;
+    },
+    getId: function () {
+      return 125;
     },
   };
 
@@ -174,6 +164,9 @@ describe("when a ship has been sunk", () => {
     hit: function () {},
     isSunk: function () {
       return true;
+    },
+    getId: function () {
+      return 123;
     },
   };
   board.placeShip(ship, [3, 3]);

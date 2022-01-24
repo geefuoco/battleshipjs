@@ -6,6 +6,7 @@ const boardFactory = (dimension) => {
   const ships = [];
   const sunkenShips = [];
   const shipMap = {};
+  const hitTiles = [];
 
   function createBoard(boardSize) {
     const board = [];
@@ -27,6 +28,10 @@ const boardFactory = (dimension) => {
       throw "ERROR: Outside of board";
     }
     return gameBoard[x][y];
+  };
+
+  const getHitTiles = () => {
+    return [...hitTiles];
   };
 
   const outOfBounds = (x, y) => {
@@ -63,23 +68,22 @@ const boardFactory = (dimension) => {
   const markHit = (x, y) => {
     const tile = getTile(x, y);
     tile.setState(tile.HIT);
+    hitTiles.push(tile);
     if (tile.getShip()) {
       tile.getShip().hit();
-      updateBoard();
+      updateBoard(tile.getShip());
     }
   };
 
-  const updateBoard = () => {
-    const sunkShips = ships.filter((ship) => ship.isSunk() === true);
-    for (let ship of sunkShips) {
-      if (sunkenShips.includes(ship)) continue;
+  const updateBoard = (ship) => {
+    if (ship.isSunk()) {
       filterShipTiles(ship);
       sunkenShips.push(ship);
     }
   };
 
   const filterShipTiles = (ship) => {
-    const tiles = shipMap[ship];
+    const tiles = shipMap[ship.getId()];
     tiles.forEach((tile) => {
       const position = tile.getPosition();
       markTilesHit(position);
@@ -89,7 +93,10 @@ const boardFactory = (dimension) => {
   const markTilesHit = (position) => {
     const surroundingTiles = getSurroundingTiles(position[0], position[1]);
     for (let [key, value] of Object.entries(surroundingTiles)) {
-      value.setState(value.HIT);
+      if (value.getState() !== value.HIT) {
+        value.setState(value.HIT);
+        hitTiles.push(value);
+      }
     }
   };
 
@@ -99,11 +106,10 @@ const boardFactory = (dimension) => {
       throw "ERROR: Ship is too close to another ship.";
     }
     const shipTiles = getShipTiles(ship, coords, offset);
-    shipTiles.push(tile);
-    validateShipTiles(shipTiles, ship, coords);
+    validateShipTiles(shipTiles, ship);
     shipTiles.forEach((tile) => tile.setShip(ship));
     ships.push(ship);
-    shipMap[ship] = shipTiles;
+    shipMap[ship.getId()] = shipTiles;
   };
 
   const getShipTiles = (ship, coords, offset) => {
@@ -122,7 +128,7 @@ const boardFactory = (dimension) => {
     return shipTiles;
   };
 
-  const validateShipTiles = (shipTiles, ship, coords) => {
+  const validateShipTiles = (shipTiles, ship) => {
     // Makes sure that no other ships are within 1 square
     shipTiles.forEach((tile) => {
       const position = tile.getPosition();
@@ -132,7 +138,6 @@ const boardFactory = (dimension) => {
       for (let [k, v] of tiles) {
         if (v.getState() !== tile.EMPTY) {
           if (v.getShip() === ship) continue;
-          alert("Ships must be placed at least 1 tile apart");
           throw "ERROR: Ship already on tile";
         }
       }
@@ -140,9 +145,8 @@ const boardFactory = (dimension) => {
   };
 
   const allSunk = () => {
-    return (
-      ships.length === ships.filter((ship) => ship.isSunk() === true).length
-    );
+    const sunk = ships.filter((ship) => ship.isSunk() === true);
+    return ships.length === sunk.length;
   };
 
   return {
@@ -152,6 +156,7 @@ const boardFactory = (dimension) => {
     markHit,
     placeShip,
     allSunk,
+    getHitTiles,
   };
 };
 

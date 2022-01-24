@@ -15,6 +15,10 @@
     display: flex;
     justify-content: space-around;
     gap: 2rem;
+    @media screen and(max-width: 1224px){
+        flex-direction: column;
+        padding: 2rem;
+    }
 
 }
 
@@ -32,6 +36,9 @@
 }
 
 .tile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 3.4rem;
     height: 3.4rem;
     background-color: rgba(0, 150, 200, .5);
@@ -45,16 +52,29 @@
     }
 }
 
+.hit{
+    padding: 1.4rem;
+    background-color: white;
+    border-radius: 100%;
+}
+
+.hit-ship{
+    background-color: red;
+}
+
 .ship{
     display: flex;
     height: fit-content;
     &:hover{
         cursor: pointer;
-        border: solid yellow 2px;
+        box-shadow: 0 0 0 .1rem yellow;
     }
 }
 
 .ship-tile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 3.4rem;
     height: 3.4rem;
     background-color: #bbb;
@@ -106,4 +126,32 @@
         cursor: pointer;
         background-color: grey;
     }
+}
+
+.game-over{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #444444d2;
+}
+
+.game-over-text{
+    font-size: 3rem;
+    font-weight: 600;
+    color: white;
+}
+
+.game-over-button{
+    margin-top: 1rem;
+    padding: 1rem;
+    box-shadow: 0 0 0 .2rem lightgrey;
+    font-size: 1.4rem;
 }

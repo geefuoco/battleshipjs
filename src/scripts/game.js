@@ -19,11 +19,14 @@ const gameFactory = () => {
     players.reverse;
   };
 
-  const checkForWinner = () => {
-    const win = players.filter((player) => {
-      player.getBoard().allSunk() === true;
+  const gameOver = () => {
+    let win = false;
+    players.forEach((player) => {
+      if (player.getBoard().allSunk()) {
+        win = true;
+      }
     });
-    return win.length > 0;
+    return win;
   };
 
   const takeTurn = (coords) => {
@@ -36,7 +39,7 @@ const gameFactory = () => {
     getCurrentPlayer,
     getOtherPlayer,
     swapPlayers,
-    checkForWinner,
+    gameOver,
     takeTurn,
   };
 };

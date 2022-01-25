@@ -5,6 +5,7 @@ import gameFactory from "./game.js";
 import { computerShips } from "../components/shipComponent.js";
 import { playerShips } from "../components/shipComponent.js";
 import { createShipDisplay } from "../components/shipComponent.js";
+import startScreen from "../components/startScreen";
 import rotate from "../components/rotateButton.js";
 import message from "../components/message.js";
 
@@ -237,5 +238,6 @@ const init = (() => {
   boardsContainer.appendChild(rotate());
   document.body.appendChild(boardsContainer);
   document.body.appendChild(createShipDisplay());
+  document.body.appendChild(startScreen());
   bindEvents();
 })();

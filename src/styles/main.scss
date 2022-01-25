@@ -155,3 +155,39 @@
     box-shadow: 0 0 0 .2rem lightgrey;
     font-size: 1.4rem;
 }
+
+.start-background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    background-color: #444;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.start-title{
+    color: #ddd;
+    font-size: 3rem;
+    margin-top: 2rem;
+    max-width: 320px;
+    z-index: 91;
+    padding: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.start-game-button{
+    cursor: pointer;
+    font-size: 2rem;
+    background-color: #4455dd;
+    color: #ddd;
+    max-width: 320px;
+    margin-top: 2rem;
+    z-index: 91;
+    padding: 1rem;
+    box-shadow: 0 .2rem .4rem lightgrey;
+}

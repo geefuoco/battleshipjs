@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "webpack server"
+    "start": "webpack server",
+    "build": "rm -rf ./dist && webpack build"
   },
   "keywords": [],
   "author": "Gianluca Fuoco",
